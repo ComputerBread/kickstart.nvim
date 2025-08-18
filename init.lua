@@ -921,19 +921,34 @@ require('lazy').setup({
   },
 
   -- {
-  --   'hardselius/warlock',
-  --   priority = 1,
+  --   'cocopon/iceberg.vim',
+  --   priority = 1000,
   --   config = function()
-  --     vim.cmd.colorscheme 'warlock'
+  --     vim.cmd.colorscheme 'iceberg'
   --   end,
   -- },
+
   {
-    'andreypopp/vim-colors-plain',
-    priority = 2,
+    'ComputerBread/warlock',
+    priority = 1,
     config = function()
-      vim.cmd.colorscheme 'plain'
+      vim.cmd.colorscheme 'warlock'
     end,
   },
+  -- {
+  --   'andreypopp/vim-colors-plain',
+  --   priority = 2,
+  --   config = function()
+  --     vim.cmd.colorscheme 'plain'
+  --   end,
+  -- },
+  -- {
+  --   'andreasvc/vim-256noir',
+  --   priority = 1000,
+  --   config = function()
+  --     vim.cmd.colorscheme '256_noir'
+  --   end,
+  -- },
 
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
