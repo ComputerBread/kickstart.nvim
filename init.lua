@@ -882,6 +882,21 @@ require('lazy').setup({
     end,
   },
 
+  -- {
+  --   'hardselius/warlock',
+  --   priority = 1,
+  --   config = function()
+  --     vim.cmd.colorscheme 'warlock'
+  --   end,
+  -- },
+  {
+    'andreypopp/vim-colors-plain',
+    priority = 2,
+    config = function()
+      vim.cmd.colorscheme 'plain'
+    end,
+  },
+
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
 
