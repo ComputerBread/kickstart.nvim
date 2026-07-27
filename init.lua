@@ -471,6 +471,19 @@ require('lazy').setup({
     end,
   },
 
+  -- svelte
+  {
+    'leafOfTree/vim-svelte-plugin',
+    ft = { 'svelte' },
+    -- This one is still very good in 2026 (especially for formatting)
+    init = function()
+      vim.g.vim_svelte_plugin_load_full_syntax = 1
+      vim.g.vim_svelte_plugin_use_typescript = 1
+      vim.g.vim_svelte_plugin_use_pug = 0 -- set to 1 if you use pug
+      vim.g.vim_svelte_plugin_has_init_indent = 1
+    end,
+  },
+
   -- LSP Plugins
   {
     -- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
@@ -684,7 +697,7 @@ require('lazy').setup({
         -- gopls = {},
         -- pyright = {},
         rust_analyzer = {},
-        zls = {},
+        -- zls = {}, ZLS is installed below, built from source, better overall
         eslint = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
@@ -694,6 +707,25 @@ require('lazy').setup({
         -- But for many setups, the LSP (`tsserver`) will work just fine
         ts_ls = {},
         --
+        svelte = {
+          -- Very important flags for good experience
+          settings = {
+            svelte = {
+              plugin = {
+                html = { completions = { enable = true, defaultValue = 'double' } },
+                css = { completions = { enable = true } },
+                svelte = {
+                  format = { enable = true },
+                  compilerWarnings = {
+                    css_unused_selector = 'ignore',
+                    a11y_misplaced_role = 'ignore',
+                    a11y_invalid_attribute = 'ignore',
+                  },
+                },
+              },
+            },
+          },
+        },
 
         -- latex
         texlab = {},
@@ -747,6 +779,13 @@ require('lazy').setup({
           end,
         },
       }
+
+      vim.lsp.config('zls', {
+        cmd = { '/usr/local/bin/zls' },
+        capabilities = capabilities,
+      })
+
+      vim.lsp.enable 'zls'
     end,
   },
 
@@ -820,7 +859,11 @@ require('lazy').setup({
           --   end,
           -- },
         },
-        opts = {},
+        opts = {
+          sources = {
+            default = { 'lsp', 'path', 'buffer', 'copilot' },
+          },
+        },
       },
       'folke/lazydev.nvim',
     },
@@ -935,6 +978,19 @@ require('lazy').setup({
       vim.cmd.colorscheme 'warlock'
     end,
   },
+
+  -- {
+  --   'mitch1000/backpack.nvim',
+  --   config = function()
+  --     require('backpack').setup {
+  --       theme = 'dark',
+  --       contrast = 'high',
+  --     }
+  --   end,
+  --   init = function()
+  --     vim.cmd.colorscheme 'backpack'
+  --   end,
+  -- },
   -- {
   --   'andreypopp/vim-colors-plain',
   --   priority = 2,
@@ -1061,6 +1117,20 @@ require('lazy').setup({
         },
       }
     end,
+  },
+
+  {
+    'zbirenbaum/copilot.lua',
+    cmd = 'Copilot',
+    event = 'InsertEnter',
+    dependencies = {
+      { 'copilotlsp-nvim/copilot-lsp' },
+      { 'giuxtaposition/blink-cmp-copilot' }, -- to integrate with blink-cmp auto completion
+    },
+    opts = {
+      suggestion = { enabled = false },
+      panel = { enabled = false },
+    },
   },
 
   -- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
